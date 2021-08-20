@@ -16,6 +16,7 @@ class Imobiliaria(Base):
     class Meta:
         verbose_name = 'Imobiliaria'
         verbose_name_plural = 'Imobiliarias'
+        unique_together = ['nome', 'endereco']
 
     def __str__(self):
         return self.nome

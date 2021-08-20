@@ -17,3 +17,15 @@ class ImovelSerializer(serializers.ModelSerializer):
             'criacao',
             'ativo'
         )
+
+
+class ImobiliariaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Imobiliaria
+        fields = (
+            'id',
+            'nome',
+            'endereco',
+            'criacao',
+            'atualizacao'
+        )
