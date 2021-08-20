@@ -1,0 +1,4 @@
+*.idea/
+venv/
+resale/__pycache__/*
+*.pyc
