@@ -2,3 +2,4 @@
 venv/
 resale/__pycache__/*
 *.pyc
+save_views/

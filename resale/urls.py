@@ -4,4 +4,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
+
+    # Rota Para URL'S- IMOVEIS - API VIEW
+    path('api/v1/', include('imoveis.urls')),
 ]
