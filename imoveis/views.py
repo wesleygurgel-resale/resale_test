@@ -1,40 +1,54 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-
 from .models import Imovel, Imobiliaria
 from .serializers import ImovelSerializer, ImobiliariaSerializer
 
+from rest_framework import generics
+from rest_framework.generics import get_object_or_404
 
-class ImobiliariaAPIView(APIView):
+
+# LIST - CREATE ------------------------------------------------------------------------------------------------------
+
+class ImobiliariaAPIViewListCreate(generics.ListCreateAPIView):
     """
-    Imobiliarias Cadastradas!
+       Imobiliarias Cadastradas List/Create
     """
-
-    def get(self, request):
-        imobiliarias = Imobiliaria.objects.all()
-        serializer = ImobiliariaSerializer(imobiliarias, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = ImobiliariaSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)  # Verifica se é válido e manda exceção! é COndinção de parada.
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    queryset = Imobiliaria.objects.all()
+    serializer_class = ImobiliariaSerializer
 
 
-class ImovelAPIView(APIView):
+class ImovelAPIViewListCreate(generics.ListCreateAPIView):
     """
-    Imovéis Cadastrados!
+           Imoveis Cadastrados List/Create
     """
+    queryset = Imovel.objects.all()
+    serializer_class = ImovelSerializer
 
-    def get(self, request):
-        imoveis = Imovel.objects.all()
-        serializer = ImovelSerializer(imoveis, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        if self.kwargs.get('imobiliaria_pk'):
+            return self.queryset.filter(imobiliaria_id=self.kwargs.get('imobiliaria_pk'))
+        return self.queryset.all()
 
-    def post(self, request):
-        serializer = ImovelSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)  # Verifica se é válido e manda exceção! é COndinção de parada.
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# RETRIEVE - UPDATE - DESTROY ---------------------------------------------------------------------------------
+
+class ImobiliariaAPIViewRUD(generics.RetrieveUpdateDestroyAPIView):
+    """
+       Imobiliarias Cadastradas Retrieve/Update/Destroy
+    """
+    queryset = Imobiliaria.objects.all()
+    serializer_class = ImobiliariaSerializer
+
+
+class ImovelAPIViewRUD(generics.RetrieveUpdateDestroyAPIView):
+    """
+        Imoveis Cadastrados Retrieve/Update/Destroy
+    """
+    queryset = Imovel.objects.all()
+    serializer_class = ImovelSerializer
+
+    def get_object(self):
+        if self.kwargs.get('imobiliaria_pk'):
+            return get_object_or_404(self.get_queryset(), imobiliaria_id=self.kwargs.get('imobiliaria_pk'),
+                                     pk=self.kwargs.get('imovel_pk'))
+
+        return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('imovel_pk'))
+
