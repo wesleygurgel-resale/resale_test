@@ -10,8 +10,8 @@ class Base(models.Model):
 
 
 class Imobiliaria(Base):
-    nome = models.CharField(max_length=255)
-    endereco = models.CharField(max_length=255)
+    nome = models.CharField(max_length=255, unique=True)
+    endereco = models.CharField(max_length=255, unique=True)
 
     class Meta:
         verbose_name = 'Imobiliaria'
@@ -36,11 +36,11 @@ class Imovel(Base):
 
     imobiliaria = models.ForeignKey(Imobiliaria, related_name='propriedades', on_delete=models.CASCADE)
     nome = models.CharField(max_length=255)
-    endereco = models.CharField(max_length=255)
+    endereco = models.CharField(max_length=255, unique=True)
     tipo = models.CharField(max_length=255, choices=TIPO_IMOVEL, default='Apartamento')
     finalidade = models.CharField(max_length=255, choices=FINALIDADE_IMOVEL, default='Residencial')
 
-    descricao = models.TextField(default='Ainda não foi criada uma descrição para este Imóvel')
+    descricao = models.TextField(default='Digite aqui a descrição do Imóvel')
     caracteristica = models.TextField(blank=True, default='Características ainda não foram especificadas para este '
                                                           'Imóvel!')
 
