@@ -17,6 +17,7 @@ class Imobiliaria(Base):
         verbose_name = 'Imobiliaria'
         verbose_name_plural = 'Imobiliarias'
         unique_together = ['nome', 'endereco']
+        ordering = ['id']
 
     def __str__(self):
         return self.nome
@@ -33,7 +34,7 @@ class Imovel(Base):
         ('Escritorio', 'Escritorio'),
     ]
 
-    imobiliaria = models.ForeignKey(Imobiliaria, related_name='empresa_proprietaria', on_delete=models.CASCADE)
+    imobiliaria = models.ForeignKey(Imobiliaria, related_name='propriedades', on_delete=models.CASCADE)
     nome = models.CharField(max_length=255)
     endereco = models.CharField(max_length=255)
     tipo = models.CharField(max_length=255, choices=TIPO_IMOVEL, default='Apartamento')
@@ -49,6 +50,7 @@ class Imovel(Base):
         verbose_name = 'Imóvel'
         verbose_name_plural = 'Imóveis'
         unique_together = ['nome', 'endereco']
+        ordering = ['id']
 
     def __str__(self):
         return f'O imóvel {self.nome} localizado em {self.endereco} está sobre responsabilidade da(o) {self.imobiliaria}'

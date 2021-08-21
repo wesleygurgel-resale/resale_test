@@ -1,54 +1,40 @@
 from .models import Imovel, Imobiliaria
 from .serializers import ImovelSerializer, ImobiliariaSerializer
 
-from rest_framework import generics
-from rest_framework.generics import get_object_or_404
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import mixins
+
+"""
+API V1
+"""
 
 
-# LIST - CREATE ------------------------------------------------------------------------------------------------------
-
-class ImobiliariaAPIViewListCreate(generics.ListCreateAPIView):
-    """
-       Imobiliarias Cadastradas List/Create
-    """
+class ImobiliariaViewSet(viewsets.ModelViewSet):
     queryset = Imobiliaria.objects.all()
     serializer_class = ImobiliariaSerializer
 
+    @action(detail=True, methods=['GET'])
+    def listar_imoveis(self, request, pk=None):
+        self.pagination_class.page_size = 1
+        imoveis = Imovel.objects.filter(imobiliaria_id=pk)
+        page = self.paginate_queryset(imoveis)
 
-class ImovelAPIViewListCreate(generics.ListCreateAPIView):
-    """
-           Imoveis Cadastrados List/Create
-    """
+        if page:
+            serializer = ImovelSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = ImovelSerializer(imoveis, many=True)
+        return Response(serializer.data)
+
+
+class ImovelViewSet(mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    mixins.ListModelMixin,
+                    viewsets.GenericViewSet
+                    ):
     queryset = Imovel.objects.all()
     serializer_class = ImovelSerializer
-
-    def get_queryset(self):
-        if self.kwargs.get('imobiliaria_pk'):
-            return self.queryset.filter(imobiliaria_id=self.kwargs.get('imobiliaria_pk'))
-        return self.queryset.all()
-
-
-# RETRIEVE - UPDATE - DESTROY ---------------------------------------------------------------------------------
-
-class ImobiliariaAPIViewRUD(generics.RetrieveUpdateDestroyAPIView):
-    """
-       Imobiliarias Cadastradas Retrieve/Update/Destroy
-    """
-    queryset = Imobiliaria.objects.all()
-    serializer_class = ImobiliariaSerializer
-
-
-class ImovelAPIViewRUD(generics.RetrieveUpdateDestroyAPIView):
-    """
-        Imoveis Cadastrados Retrieve/Update/Destroy
-    """
-    queryset = Imovel.objects.all()
-    serializer_class = ImovelSerializer
-
-    def get_object(self):
-        if self.kwargs.get('imobiliaria_pk'):
-            return get_object_or_404(self.get_queryset(), imobiliaria_id=self.kwargs.get('imobiliaria_pk'),
-                                     pk=self.kwargs.get('imovel_pk'))
-
-        return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('imovel_pk'))
-

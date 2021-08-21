@@ -14,18 +14,20 @@ class ImovelSerializer(serializers.ModelSerializer):
             'finalidade',
             'descricao',
             'caracteristica',
-            'criacao',
             'ativo'
         )
 
 
 class ImobiliariaSerializer(serializers.ModelSerializer):
+
+    # HyperLinked Related Field
+    propriedades = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='imovel-detail')
+
     class Meta:
         model = Imobiliaria
         fields = (
             'id',
             'nome',
             'endereco',
-            'criacao',
-            'atualizacao'
+            'propriedades',
         )
