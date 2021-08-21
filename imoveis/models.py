@@ -38,7 +38,7 @@ class Imovel(Base):
     nome = models.CharField(max_length=255)
     endereco = models.CharField(max_length=255, unique=True)
     tipo = models.CharField(max_length=255, choices=TIPO_IMOVEL, default='Apartamento')
-    finalidade = models.CharField(max_length=255, choices=FINALIDADE_IMOVEL, default='Residencial')
+    finalidade = models.CharField(null=True, max_length=255, choices=FINALIDADE_IMOVEL)
 
     descricao = models.TextField(default='Digite aqui a descrição do Imóvel')
     caracteristica = models.TextField(blank=True, default='Características ainda não foram especificadas para este '
