@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Base(models.Model):
+    """
+    Model Base para criação dos demais.
+    """
     criacao = models.DateTimeField(auto_now_add=True)
     atualizacao = models.DateTimeField(auto_now=True)
 
@@ -10,6 +13,9 @@ class Base(models.Model):
 
 
 class Imobiliaria(Base):
+    """
+    Model de Imobiliaria.
+    """
     nome = models.CharField(max_length=255, unique=True)
     endereco = models.CharField(max_length=255, unique=True)
 
@@ -24,6 +30,9 @@ class Imobiliaria(Base):
 
 
 class Imovel(Base):
+    """
+    Model Imovel com ForeignKey para Imobiliaria.
+    """
     TIPO_IMOVEL = [
         ('Apartamento', 'Apartamento'),
         ('Casa', 'Casa'),
@@ -37,7 +46,7 @@ class Imovel(Base):
     imobiliaria = models.ForeignKey(Imobiliaria, related_name='propriedades', on_delete=models.CASCADE)
     nome = models.CharField(max_length=255)
     endereco = models.CharField(max_length=255, unique=True)
-    tipo = models.CharField(max_length=255, choices=TIPO_IMOVEL, default='Apartamento')
+    tipo = models.CharField(max_length=255, choices=TIPO_IMOVEL, default='Apartamento', blank=False, null=False)
     finalidade = models.CharField(null=True, max_length=255, choices=FINALIDADE_IMOVEL)
 
     descricao = models.TextField(default='Digite aqui a descrição do Imóvel')

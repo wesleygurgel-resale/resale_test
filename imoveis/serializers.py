@@ -17,9 +17,15 @@ class ImovelSerializer(serializers.ModelSerializer):
             'ativo'
         )
 
-    def validate_descricao(self, texto):
-        if not texto == 'Digite aqui a descrição do Imóvel':
-            return texto
+    def validate_descricao(self, descricao):
+        """
+        Validate de Descrição, verificar se a descrição é diferente da 'default'
+
+        :param texto:
+        :return:
+        """
+        if descricao != 'Digite aqui a descrição do Imóvel' and descricao != '':
+            return descricao
         raise serializers.ValidationError('É necessário digitar uma descrição válida para o Imóvel!')
 
 

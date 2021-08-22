@@ -16,7 +16,22 @@ API V1
 
 class ImobiliariaViewSet(viewsets.ModelViewSet):
     """
-    Imobiliarias e suas respectivas propriedades.
+    Imobiliária e suas propriedades.
+
+    list:
+    Retorna lista de Imobiliárias cadastrados.
+
+    create:
+    Cria uma nova instância de Imobiliária.
+
+    retrieve:
+    Retorna a Imobiliária passada como parâmetro.
+
+    delete:
+    Deleta a Imobiliária passada como parâmetro.
+
+    update:
+    Atualiza uma Imobiliária com base no seu ID.
     """
 
     queryset = Imobiliaria.objects.all()
@@ -25,6 +40,13 @@ class ImobiliariaViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['GET'])
     def listar_imoveis(self, request: HttpRequest, pk=None):
+        """
+        Listar Imoveis de uma Imobiliaria específica com base em seu ID.
+
+        :param request:
+        :param pk:
+        :return:
+        """
         self.pagination_class.page_size = 2
         imoveis = Imovel.objects.filter(imobiliaria_id=pk)
 
@@ -41,7 +63,20 @@ class ImobiliariaViewSet(viewsets.ModelViewSet):
 
 class ImovelViewSet(viewsets.ModelViewSet):
     """
-    Detalhes sobre Imovéis cadastrados.
+    list:
+    Retorna lista de Imovéis cadastrados.
+
+    create:
+    Cria uma nova instância de Imóvel.
+
+    retrieve:
+    Retorna o Imóvel passado como parâmetro.
+
+    delete:
+    Deleta o Imóvel passado como parâmetro.
+
+    update:
+    Atualiza um Imóvel com base no seu ID.
     """
     queryset = Imovel.objects.all()
     serializer_class = ImovelSerializer
