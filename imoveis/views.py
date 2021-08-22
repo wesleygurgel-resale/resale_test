@@ -16,7 +16,7 @@ API V1
 
 class ImobiliariaViewSet(viewsets.ModelViewSet):
     """
-    Para acessar imoveis: /api/v1/imoveis/
+    Imobiliarias e suas respectivas propriedades.
     """
 
     queryset = Imobiliaria.objects.all()
@@ -40,6 +40,9 @@ class ImobiliariaViewSet(viewsets.ModelViewSet):
 
 
 class ImovelViewSet(viewsets.ModelViewSet):
+    """
+    Detalhes sobre Imovéis cadastrados.
+    """
     queryset = Imovel.objects.all()
     serializer_class = ImovelSerializer
     filterset_class = ImovelFilter
