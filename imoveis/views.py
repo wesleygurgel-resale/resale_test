@@ -16,7 +16,7 @@ API V1
 
 class ImobiliariaViewSet(viewsets.ModelViewSet):
     """
-    Para acessar imoveis: /api/v1/imoveis/a[
+    Para acessar imoveis: /api/v1/imoveis/
     """
 
     queryset = Imobiliaria.objects.all()
@@ -39,13 +39,8 @@ class ImobiliariaViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class ImovelViewSet(mixins.CreateModelMixin,
-                    mixins.RetrieveModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.DestroyModelMixin,
-                    mixins.ListModelMixin,
-                    viewsets.GenericViewSet
-                    ):
+class ImovelViewSet(viewsets.ModelViewSet):
     queryset = Imovel.objects.all()
     serializer_class = ImovelSerializer
     filterset_class = ImovelFilter
+
