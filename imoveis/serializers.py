@@ -2,7 +2,19 @@ from rest_framework import serializers
 from .models import Imobiliaria, Imovel
 
 
+class ImobiliariaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Imobiliaria
+        fields = (
+            'id',
+            'nome',
+            'endereco',
+        )
+
+
 class ImovelSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Imovel
         fields = (
@@ -17,6 +29,8 @@ class ImovelSerializer(serializers.ModelSerializer):
             'ativo'
         )
 
+    imobiliaria = ImobiliariaSerializer()
+
     def validate_descricao(self, descricao):
         """
         Validate de Descrição, verificar se a descrição é diferente da 'default'
@@ -28,17 +42,3 @@ class ImovelSerializer(serializers.ModelSerializer):
             return descricao
         raise serializers.ValidationError('É necessário digitar uma descrição com no mínimo 50 caracteres para o '
                                           'Imóvel!')
-
-
-class ImobiliariaSerializer(serializers.ModelSerializer):
-    # HyperLinked Related Field
-    propriedades = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='imovel-detail')
-
-    class Meta:
-        model = Imobiliaria
-        fields = (
-            'id',
-            'nome',
-            'endereco',
-            'propriedades',
-        )
