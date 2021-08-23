@@ -24,9 +24,10 @@ class ImovelSerializer(serializers.ModelSerializer):
         :param texto:
         :return:
         """
-        if descricao != 'Digite aqui a descrição do Imóvel' and descricao != '':
+        if len(descricao) > 50:
             return descricao
-        raise serializers.ValidationError('É necessário digitar uma descrição válida para o Imóvel!')
+        raise serializers.ValidationError('É necessário digitar uma descrição com no mínimo 50 caracteres para o '
+                                          'Imóvel!')
 
 
 class ImobiliariaSerializer(serializers.ModelSerializer):
