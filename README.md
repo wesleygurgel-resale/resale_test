@@ -44,7 +44,7 @@ class Tipo(models.Model):
 
 Então tomei a liberdade de criar um Model para **Tipo** para que eu pudesse utilizar de forma mais clara como método de Filtragem.
 
-**OBS**: Deixei o campo **Finalidade** na `class Imovel(Base):` como um VARCHAR usando *choices* para ter as duas formas.
+**OBS**: Deixei o campo **Finalidade** na `class Imovel(Base):` como um VARCHAR usando *choices* pois entendo que essas opções não variam muito.
 ```py
 finalidade = models.CharField(null=True, max_length=255, choices=FINALIDADE_IMOVEL)       
 ```
@@ -145,6 +145,16 @@ O token para uso através de plataformas como o Insomnia ou PostMan, pode ser en
 Usuario = rafael
 Senha = 123456
 ```
+___
+### Testes
+Criei um sistema de **testes** bem **simples** usando a biblioteca *PyTest*.
+
+Na **raíz** do projeto **execute** o seguinte comando: ` pytest teste_pytest.py`
+
+**OBS**: Não está 100% automático. Em `test_delete_imovel` é necessário passar um parâmetro válido logo após `url=f'{self.imoveis_url_base}`
+
+
+
 
 ___
 ## Formas de Contato
