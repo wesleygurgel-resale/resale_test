@@ -56,5 +56,5 @@ class TestImoveis:
     def test_delete_imovel(self):
         response = requests.delete(url=f'{self.imoveis_url_base}8/', headers=self.headers)
 
-        assert response.status_code == 200
+        assert response.status_code == 204
         assert len(response.text) == 0
