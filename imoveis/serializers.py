@@ -4,12 +4,15 @@ from .models import Imobiliaria, Imovel
 
 class ImobiliariaSerializer(serializers.ModelSerializer):
 
+    propriedades = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='imovel-detail')
+
     class Meta:
         model = Imobiliaria
         fields = (
             'id',
             'nome',
             'endereco',
+            'propriedades'
         )
 
 
@@ -28,8 +31,6 @@ class ImovelSerializer(serializers.ModelSerializer):
             'caracteristica',
             'ativo'
         )
-
-    imobiliaria = ImobiliariaSerializer()
 
     def validate_descricao(self, descricao):
         """
