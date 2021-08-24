@@ -12,6 +12,21 @@ class Base(models.Model):
         abstract = True
 
 
+class Tipo(models.Model):
+    """
+    Model que define o Tipo de Imóvel.
+    """
+    tipo = models.CharField(max_length=50, unique=True)
+
+    class Meta:
+        verbose_name = "Tipo de Imóvel"
+        verbose_name_plural = "Tipos de Imóveis"
+        ordering = ['id']
+
+    def __str__(self):
+        return self.tipo
+
+
 class Imobiliaria(Base):
     """
     Model de Imobiliaria.
@@ -32,11 +47,6 @@ class Imovel(Base):
     """
     Model Imovel com ForeignKey para Imobiliaria.
     """
-    TIPO_IMOVEL = [
-        ('Apartamento', 'Apartamento'),
-        ('Casa', 'Casa'),
-    ]
-
     FINALIDADE_IMOVEL = [
         ('Residencial', 'Residencial'),
         ('Escritorio', 'Escritorio'),
@@ -45,7 +55,7 @@ class Imovel(Base):
     imobiliaria = models.ForeignKey(Imobiliaria, related_name='propriedades', on_delete=models.CASCADE)
     nome = models.CharField(max_length=255)
     endereco = models.CharField(max_length=255, unique=True)
-    tipo = models.CharField(max_length=255, choices=TIPO_IMOVEL, default='Apartamento', blank=False, null=False)
+    tipo = models.ForeignKey(Tipo, related_name='tipo_imovel', on_delete=models.CASCADE)
     finalidade = models.CharField(null=True, max_length=255, choices=FINALIDADE_IMOVEL)
 
     descricao = models.TextField(null=False, blank=False)
