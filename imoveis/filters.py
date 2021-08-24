@@ -12,4 +12,4 @@ class ImobiliariaFilter(filters.FilterSet):
 class ImovelFilter(filters.FilterSet):
     class Meta:
         model = Imovel
-        fields = ['nome']
+        fields = ['nome', 'tipo', 'imobiliaria']
