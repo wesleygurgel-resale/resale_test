@@ -135,6 +135,18 @@ ___
 Você pode checar a **documentação** em **[/docs/](https://resale-test-wg.herokuapp.com/docs/)**
 
 ___
+### Como realizar Login para obter permissões
+Através da **[URL](https://resale-test-wg.herokuapp.com/admin/)** ou através do próprio botão de Login na página da API.
+
+O token para uso através de plataformas como o Insomnia ou PostMan, pode ser encontrado no **[/admin/](https://resale-test-wg.herokuapp.com/admin/authtoken/tokenproxy/)**
+
+#### Conta
+```
+Usuario = rafael
+Senha = 123456
+```
+
+___
 ## Formas de Contato
 - ![icons8-whatsapp-24](https://user-images.githubusercontent.com/39765254/130647237-2f0245b8-6360-496a-921a-6eab2da175e2.png) **[(84) 98861-4565](https://api.whatsapp.com/send?phone=5584988614565)**
 
