@@ -4,7 +4,8 @@ from .models import Imobiliaria, Imovel
 
 class ImobiliariaSerializer(serializers.ModelSerializer):
 
-    propriedades = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='imovel-detail')
+    propriedades = serializers.HyperlinkedRelatedField(
+        many=True, read_only=True, view_name='imovel-detail')
 
     class Meta:
         model = Imobiliaria
